@@ -16,19 +16,19 @@ const Navbar = () => {
                     <ul
                         tabIndex="-1"
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <NavLink>Home</NavLink>
-                        <NavLink>Clubs</NavLink>
-                        <NavLink>Events</NavLink>
+                        <NavLink to={'/'}>Home</NavLink>
+                        <NavLink to={"/clubs"}>Clubs</NavLink>
+                        <NavLink to={"/events"}>Events</NavLink>
                         
                     </ul>
                 </div>
                 <a className="btn btn-ghost text-xl">ClubSphere</a>
             </div>
             <div className="navbar-center hidden lg:flex gap-4">
-                <ul className="flex gap-2  px-3">
-                         <NavLink>Home</NavLink>
-                        <NavLink>Clubs</NavLink>
-                        <NavLink>Events</NavLink>
+                <ul className="flex gap-4  px-3">
+                         <NavLink to={'/'}>Home</NavLink>
+                        <NavLink to={"/clubs"}>Clubs</NavLink>
+                        <NavLink to={"/events"}>Events</NavLink>
                 </ul>
             </div>
             <div className="navbar-end flex gap-2">
