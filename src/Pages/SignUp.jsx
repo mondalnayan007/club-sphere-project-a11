@@ -4,8 +4,9 @@ import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-hot-toast'
 import { TbFidgetSpinner } from 'react-icons/tb'
 import { useForm } from 'react-hook-form'
+import { imageUpload } from '../utils'
 import useAuth from '../hooks/useAuth'
-// import { imageUpload } from '../../utils'
+
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth()
@@ -23,7 +24,7 @@ const SignUp = () => {
   console.log(errors)
   const onSubmit = async data => {
     const { name, image, email, password } = data
-    // const imageFile = image[0]
+    const imageFile = image[0]
     // const formData = new FormData()
     // formData.append('image', imageFile)
 
@@ -34,9 +35,7 @@ const SignUp = () => {
       //   }`,
       //   formData
       // )
-    //   const imageURL = await imageUpload(imageFile)
-      // const cloudinaryImageUrl = await imageUploadCloudinary(imageFile)
-      // console.log('Cloudinary Response ----->', cloudinaryImageUrl)
+      const imageURL = await imageUpload(imageFile)
 
       //1. User Registration
       const result = await createUser(email, password)
@@ -101,7 +100,7 @@ const SignUp = () => {
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
         <div className='mb-8 text-center'>
           <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
-          <p className='text-sm text-gray-400'>Welcome to PlantNet</p>
+          
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}

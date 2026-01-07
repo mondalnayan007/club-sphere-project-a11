@@ -5,6 +5,8 @@ import toast from 'react-hot-toast'
 import { FcGoogle } from 'react-icons/fc'
 import { TbFidgetSpinner } from 'react-icons/tb'
 import useAuth from '../hooks/useAuth'
+import { useForm } from 'react-hook-form'
+
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth()
@@ -13,18 +15,25 @@ const Login = () => {
 
   const from = location.state || '/'
 
-//   if (loading) return <LoadingSpinner />
-  if (user) return <Navigate to={from} replace={true} />
+
 
   // form submit handler
-  const handleSubmit = async event => {
-    event.preventDefault()
-    const form = event.target
-    const email = form.email.value
-    const password = form.password.value
+
+  const {register,handleSubmit, formState:{errors}} = useForm();
+
+  //   if (loading) return <LoadingSpinner />
+  if (user) return <Navigate to={from} replace={true} />
+
+  const handleRegistration = async data => {
+    // event.preventDefault()
+    // const form = event.target
+    // const email = form.email.value
+    // const password = form.password.value
+    const { email, password } = data
 
     try {
       //User Login
+
       await signIn(email, password)
 
       navigate(from, { replace: true })
@@ -59,7 +68,7 @@ const Login = () => {
         </div>
         {/* Login Form */}
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(handleRegistration)}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
@@ -73,11 +82,16 @@ const Login = () => {
                 type='email'
                 name='email'
                 id='email'
-                required
+               
                 placeholder='Enter Your Email Here'
+                {...register("email" ,{ required:true})}
                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
                 data-temp-mail-org='0'
               />
+              {
+                errors.email?.type==='required' && <p className='text-red-500 text-xs mt-1'>Email is required</p>
+              }
+
             </div>
             <div>
               <div className='flex justify-between'>
@@ -90,10 +104,14 @@ const Login = () => {
                 name='password'
                 autoComplete='current-password'
                 id='password'
-                required
+               
                 placeholder='*******'
+                {...register("password", { required: true })}
                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900'
               />
+              {
+                errors.password?.type==='required' && <p className='text-red-500 text-xs mt-1'>Password is required</p>
+              }
             </div>
           </div>
 
